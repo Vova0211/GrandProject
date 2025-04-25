@@ -38,16 +38,20 @@
 
 </body>
     <template id="contact">
-        <table class="main__table">
-            <tr class="main__row">
-                <th class="main__hcol id">ID</th>
-                <th class="main__hcol fio">Фамилия, имя, отчество</th>
-                <th class="main__hcol timeCreate">Дата и время создания</th>
-                <th class="main__hcol timeUpdate">Последнее изменение</th>
-                <th class="main__hcol contacts">Контакты</th>
-                <th class="main__hcol update">Действия</th>
-                <th class="main__hcol delete">Действия</th>
-            </tr>
-        </table>
+        <div class="contact">
+            <p class="id div"></p>
+            <p class="fio div"></p>
+            <div class="d-flex">
+                <p class="dateCreate div"></p>
+                <p class="timeCreate div"></p>
+            </div>
+            <div class="d-flex">
+                <p class="dateEdit div"></p>
+                <p class="timeEdit div"></p>
+            </div>
+            <div class="contacts"></div>
+            <p class="edit div">Изменить</p>
+            <p class="delete div">Удалить</p>
+        </div>
     </template>
 </html>
