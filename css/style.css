@@ -69,7 +69,7 @@ body {
 }
 
 .main__load {
-    height: 300px;
+    min-height: 300px;
     margin-bottom: 40px;
     background-color: #FFFFFF;
     background-image: url(../img/load.png);
@@ -173,4 +173,50 @@ body {
     height: 16px;
     cursor: pointer;
 
+}
+.back {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.window {
+    position: absolute;
+    z-index: 3;
+    left: 32.5%;
+    top: 25%;
+    width: 35%;
+    height: 50%;
+    background-color: white;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.x {
+    position: absolute;
+    right: 3%;
+    top: 4%;
+    background-image: url("../img/x.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.window__head {
+    margin-bottom: 10%;
+}
+
+.window__form > input {
+    border: none;
+    border-bottom: 1px solid gray;
+    margin-bottom: 5%;
+}
+
+.window__form {
+    display: flex;
+    flex-direction: column;
 }
