@@ -24,11 +24,15 @@ function createWindow(type = "edit") {
   back.classList.add("back");
   const window = document.createElement("div");
   window.classList.add("window");
-  const x = document.createElement('div');
-  x.classList.add("x");
-  window.appendChild(x);
+  const close = document.createElement('div');
+  close.classList.add("x");
+  window.appendChild(close);
   document.body.appendChild(back);
   document.body.appendChild(window);
+  close.addEventListener("click", e => {
+    document.querySelector(".back").remove();
+    document.querySelector(".window").remove();
+  })
   if (type === "edit") {
     
   } else {
@@ -45,10 +49,57 @@ function createWindow(type = "edit") {
     name.placeholder = "Имя";
     lastname.placeholder = "Отчество";
 
+    const add = document.createElement('div');
+    const addBtn = document.createElement('div');
+    addBtn.classList.add("add_btn")
+    add.classList.add("add_contact");
+    const h3 = document.createElement('h3');
+    h3.textContent = "Добавить контакт";
+    const addImg = document.createElement('img');
+    addImg.src = "img/create.svg";
+    addBtn.addEventListener("click", e => {
+      const div = document.createElement('div');
+      div.classList.add("data");
+      const select = document.createElement('select');
+      const input = document.createElement("input");
+      const delDiv = document.createElement('div');
+      delDiv.classList.add("del_div");
+      delDiv.addEventListener("click", e => {
+        div.remove();
+      })
+      const img = document.createElement('img');
+      img.src = "img/cancel.svg";
+      delDiv.appendChild(img);
+      input.placeholder = "Введите данные контакта";
+      select.classList.add("select_contcts");
+      const options = document.getElementById("dataToContact").content.cloneNode(true);
+      select.appendChild(options);
+      div.appendChild(select);
+      div.appendChild(input);
+      div.appendChild(delDiv);
+      add.appendChild(div);
+    })
+    addBtn.appendChild(addImg);
+    addBtn.appendChild(h3);
+    add.appendChild(addBtn);
+    const create = document.createElement('button');
+    create.textContent = "Сохранить";
+    create.classList.add("btn_create");
+    const cancel = document.createElement('p');
+    cancel.classList.add("btn_cancel");
+    cancel.textContent = "Отмена";
+    cancel.addEventListener("click", e => {
+      document.querySelector(".back").remove();
+      document.querySelector(".window").remove();
+    })
+
     form.appendChild(surname);
     form.appendChild(name);
     form.appendChild(lastname);
     window.appendChild(form);
+    window.appendChild(add)
+    window.appendChild(create);
+    window.appendChild(cancel);
   }
 }
 async function start() {
@@ -66,7 +117,7 @@ async function start() {
     temp.querySelector(".dateEdit").textContent = getDate(data[i].updatedAt);
     temp.querySelector(".timeEdit").textContent = getTime(data[i].updatedAt);
     temp.querySelector(".edit").addEventListener('click', e => {
-
+      createWindow("edit");
     });
     temp.querySelector(".delete").addEventListener('click', e => {delCont(data[i].id)});
     place.appendChild(temp);
