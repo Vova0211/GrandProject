@@ -98,7 +98,6 @@ async function editWind(id) {
   surname.value = data.surname;
   name.value = data.name;
   lastname.value = data.lastName;
-
     const add = document.createElement('div');
     const addBtn = document.createElement('div');
     addBtn.classList.add("add_btn")
@@ -293,21 +292,23 @@ function createWindow(type = "edit") {
   }
 }
 
-async function getContact(value) {
+async function searchContact(value) {
+  if (value == "") {
+    loadCards();
+    return;
+  }
   const ans = await fetch(`http://localhost:3000/api/clients?search=${value}`);
-  const res = await ans.json();
-  console.log(res);
+  let res = await ans.json();
+  res = res.map(a => a.id);
+  const place = document.querySelector(".main__load");
+  let arr = [...document.getElementsByClassName("contact")];
+  arr = arr.filter(a => res.includes(a.childNodes[1].textContent));
+  console.log(arr);
+  document.querySelectorAll(".contact").forEach(e => {e.remove();});
+  arr.forEach(el => {place.appendChild(el)});
 }
 
-async function start() {
-  document.querySelector('.header__search').addEventListener('keydown', e => {
-    if (e.keyCode == 13) {
-      getContact(e.target.value);
-      e.target.value = "";
-    }
-  })
-  const ans = await fetch("http://localhost:3000/api/clients");
-  const data = await ans.json();
+function sortContacts() {
   const place = document.querySelector(".main__load");
   document.querySelector(".id_sort").parentNode.addEventListener('click', e => {
     const arr = [...document.getElementsByClassName("contact")];
@@ -357,7 +358,13 @@ async function start() {
     document.querySelectorAll(".contact").forEach(e => {e.remove();})
     arr.forEach(el => {place.appendChild(el)});
   })
+}
 
+async function loadCards() {
+  const ans = await fetch("http://localhost:3000/api/clients");
+  const data = await ans.json();
+  const place = document.querySelector(".main__load");
+  document.querySelectorAll(".contact").forEach(e => {e.remove();});
   for (let i = 0; i < data.length; i++) {
     const temp = document.getElementById("contact").content.cloneNode(true);
     temp.querySelector(".id").textContent = data[i].id;
@@ -404,11 +411,20 @@ async function start() {
     temp.querySelector(".delete").addEventListener('click', e => {confDelCont(data[i].id)});
     place.appendChild(temp);
   }
+}
+function start() {
   document.querySelector(".main__load").style = 'background-image: url("");';
   document.querySelector('.main__btn').addEventListener('click', e => {
     createWindow("create");
   })
+  document.querySelector('.header__search').addEventListener('keydown', e => {
+    if (e.keyCode == 13) {
+      searchContact(e.target.value);
+      e.target.value = "";
+    }
+  })
 }
+loadCards()
 start()
 //Made by chatGPT
 // Grazhdantcev is a god

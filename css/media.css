@@ -1,0 +1,27 @@
+@media (max-width: 1145px) {
+  .actions {
+    grid-column: 18 / span 2;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main__hcol:nth-child(6) {
+    grid-column: 18 / span 2;
+  }
+  .actions > p {
+    margin: 0;
+  }
+  .createDiv {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .editDiv {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .createDiv > p, .editDiv > p {
+    margin: 0;
+  }
+  .contact {
+    font-size: 15px;
+  }
+}

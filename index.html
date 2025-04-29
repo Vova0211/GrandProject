@@ -7,6 +7,7 @@
     <title>skb</title>
     <link rel="stylesheet" href="./css/normolize.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/media.css">
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <script src="script.js" defer></script>
 </head>
@@ -19,14 +20,14 @@
     <main class="main">
         <h1 class="main__title">Клиенты</h1>
         <table class="main__table">
-            <tr class="main__row">
-                <th class="main__hcol">ID <img class="id_sort"></th>
-                <th class="main__hcol">Фамилия, имя, отчество <img class="fio_sort"><p style="display: inline; color: #9873FF" class="fio_sort_p"></p></th>
-                <th class="main__hcol">Дата и время создания <img class="create_sort"></th>
-                <th class="main__hcol">Последнее изменение <img class="edit_sort"></th>
-                <th class="main__hcol">Контакты</th>
-                <th class="main__hcol">Действия</th>
-            </tr>
+            <div class="main__row">
+                <div class="main__hcol">ID <img class="id_sort"></div>
+                <div class="main__hcol">Фамилия, имя, отчество <img class="fio_sort"><p style="display: inline; color: #9873FF" class="fio_sort_p"></p></div>
+                <div class="main__hcol">Дата и время создания <img class="create_sort"></div>
+                <div class="main__hcol">Последнее изменение <img class="edit_sort"></div>
+                <div class="main__hcol">Контакты</div>
+                <div class="main__hcol">Действия</div>
+            </div>
         </table>
         <div class="main__load"></div>
         <button class="main__btn"> <svg  width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,17 +41,19 @@
         <div class="contact">
             <p class="id div"></p>
             <p class="fio div"></p>
-            <div class="d-flex">
+            <div class="d-flex createDiv">
                 <p class="dateCreate div"></p>
                 <p class="timeCreate div"></p>
             </div>
-            <div class="d-flex">
+            <div class="d-flex editDiv">
                 <p class="dateEdit div"></p>
                 <p class="timeEdit div"></p>
             </div>
-            <div class="contacts "></div>
-            <p class="edit div">Изменить</p>
-            <p class="delete div">Удалить</p>
+            <div class="contacts"></div>
+            <div class="actions">
+                <p class="edit div">Изменить</p>
+                <p class="delete div">Удалить</p>
+            </div>
         </div>
     </template>
     <template id="dataToContact">

@@ -52,20 +52,47 @@ body {
 
 }
 
+.main__row {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+}
+
+.main__hcol:nth-child(1) {
+    margin-right: 10px;
+    grid-column: 1 / span 1;
+    text-align: center;
+}
+
+.main__hcol:nth-child(2) {
+    grid-column: 3 / span 5;
+}
+
+.main__hcol:nth-child(3) {
+    grid-column: 8 / span 3;
+
+}
+
+.main__hcol:nth-child(4) {
+    grid-column: 11 / span 3;
+
+}
+
+.main__hcol:nth-child(5) {
+    grid-column: 14 / span 3;
+
+}
+
+.main__hcol:nth-child(6) {
+    grid-column: 17 / span 2;
+    /* width: 200px; */
+    text-align: start;
+}
+
 .main__hcol {
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
     color: #B0B0B0;
-}
-
-.main__hcol:nth-child(1) {
-    margin-right: 10px;
-}
-
-.main__hcol:last-child {
-    width: 200px;
-    text-align: start;
 }
 
 .main__load {
@@ -99,9 +126,10 @@ body {
     display: block;
 }
 .contact {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    /* justify-content: space-around; */
+    /* flex-direction: row; */
     padding: 20px;
 }
 .d-flex {
@@ -109,36 +137,34 @@ body {
     flex-direction: row;
     gap: 15px;
 }
-/*
+
 .id {
-    margin-right: 20px;
+    grid-column: 1 / span 1;
+    grid-row: 1;
 }
 .fio {
-    width: 260px;
+    grid-column: 3 / span 5;
+    grid-row: 1;
 }
-.dateCreate {
-    margin-right: 10px;
+.createDiv {
+    grid-column: 8 / span 3;
+    grid-row: 1;
 }
-.timeCreate {
-    margin-right: 40px;
-    color: #B0B0B0;
+.editDiv {
+    grid-column: 11 / span 3;
+    grid-row: 1;
 }
-.dateEdit {
-    margin-right: 10px;
+.timeCreate, .timeEdit {
+    color: rgba(176, 176, 176, 1);
 }
-.timeEdit {
-    margin-right: 30px;
-    color: #B0B0B0;
-}
-.contacts {
-    width: 108px;
-    margin-right: 40px;
+.actions {
+    grid-column: 17 / span 3;
     display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
     flex-wrap: nowrap;
-}*/
+    gap: 40%;
+}
 .edit {
+    /* grid-column: 17 / span 1; */
     position: relative;
     /* margin-right: 46px; */
     cursor: pointer;
@@ -159,7 +185,8 @@ body {
 .delete {
     position: relative;
     cursor: pointer;
-
+    /* grid-column: 19 / span 1; */
+    grid-row: 1;
 }
 .delete:before {
     content: "";
@@ -174,6 +201,8 @@ body {
     cursor: pointer;
 
 }
+
+
 .back {
     position: absolute;
     left: 0;
@@ -308,6 +337,7 @@ body {
 }
 
 .contacts {
+    grid-column: 14 / span 3;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -343,6 +373,7 @@ body {
     bottom: 25px;
     font-size: 12px;
     text-wrap: nowrap;
+    white-space: nowrap;
     left: -500%;
     background-color: black;
     color: white;
