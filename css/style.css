@@ -354,3 +354,13 @@ body {
     font-size: 10px;
     text-align: center;
 }
+
+.p_id {
+    position: absolute;
+    top: 12px;
+    left: 48%;
+}
+th {
+    cursor: pointer;
+    user-select: none;
+}
