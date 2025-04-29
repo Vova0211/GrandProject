@@ -16,9 +16,13 @@ async function delCont(id) {
 async function editCont(id) {
   
 }
+
+
 async function createCont(data) {
   
 }
+
+
 function createWindow(type = "edit") {
   const back = document.createElement("div");
   back.classList.add("back");
@@ -97,11 +101,12 @@ function createWindow(type = "edit") {
     form.appendChild(name);
     form.appendChild(lastname);
     window.appendChild(form);
-    window.appendChild(add)
+    window.appendChild(add);
     window.appendChild(create);
     window.appendChild(cancel);
   }
 }
+
 async function start() {
   const ans = await fetch("http://localhost:3000/api/clients");
   console.log(`Status: ${ans.status}`);
@@ -116,6 +121,11 @@ async function start() {
     temp.querySelector(".timeCreate").textContent = getTime(data[i].createdAt);
     temp.querySelector(".dateEdit").textContent = getDate(data[i].updatedAt);
     temp.querySelector(".timeEdit").textContent = getTime(data[i].updatedAt);
+    for (let j = 0; j < data[i].contacts.length; j++) {
+      const contact = document.createElement('div');
+      contact.classList.add(data[i].contacts[j].type);
+      temp.querySelector(".contacts").appendChild(contact);
+    }
     temp.querySelector(".edit").addEventListener('click', e => {
       createWindow("edit");
     });
@@ -128,3 +138,4 @@ async function start() {
   })
 }
 start()
+//Made by chatGPT 

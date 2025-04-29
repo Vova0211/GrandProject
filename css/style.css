@@ -285,3 +285,15 @@ body {
     background-color: rgba(200, 197, 209, 0.6);
     cursor: pointer;
 }
+
+.tel {
+    width: 16px;
+    height: 16px;
+    background-color: #9873FF;
+}
+
+.contacts {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
