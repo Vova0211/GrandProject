@@ -293,7 +293,19 @@ function createWindow(type = "edit") {
   }
 }
 
+async function getContact(value) {
+  const ans = await fetch(`http://localhost:3000/api/clients?search=${value}`);
+  const res = await ans.json();
+  console.log(res);
+}
+
 async function start() {
+  document.querySelector('.header__search').addEventListener('keydown', e => {
+    if (e.keyCode == 13) {
+      getContact(e.target.value);
+      e.target.value = "";
+    }
+  })
   const ans = await fetch("http://localhost:3000/api/clients");
   const data = await ans.json();
   const place = document.querySelector(".main__load");
@@ -363,7 +375,8 @@ async function start() {
         dop.textContent = `+${data[i].contacts.length - 4}`;
         temp.querySelector(".contacts").appendChild(dop);
         dop.addEventListener('click', e => {
-          document.querySelector(".contacts").classList.add("contacts_true");
+          const div = e.target.parentNode;
+          div.classList.add("contacts_true");
           dop.remove();
           for (let t = 4; t < data[i].contacts.length; t++) {
             const contact = document.createElement('div');
@@ -372,7 +385,7 @@ async function start() {
             contact.dataset.value = data[i].contacts[t].value;
             contact.addEventListener('mouseenter', moreInfo);
             contact.addEventListener('mouseleave', delInfo);
-            document.querySelector(".contacts").appendChild(contact);
+            div.appendChild(contact);
           }
         })
         break;

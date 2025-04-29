@@ -189,10 +189,7 @@ body {
     left: 33%;
     top: 20vh;
     width: 30%;
-    /* min-height: 50%; */
     background-color: white;
-    /* padding-left: 2%; */
-    /* padding-right: 2%; */
 }
 .text-center {
     text-align: center;
@@ -363,6 +360,7 @@ body {
     top: 12px;
     left: 48%;
 }
+
 th {
     cursor: pointer;
     user-select: none;
