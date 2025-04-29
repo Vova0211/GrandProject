@@ -8,15 +8,37 @@ function getTime(str) {
   let newStr = `${str.slice(0, 5)}`;
   return newStr;
 }
+
+function moreInfo(e) {
+  const div = document.createElement('div');
+  div.classList.add("contact_info");
+  if (e.target.classList[0] == "tel") {
+    div.textContent = `Телефон: ${e.target.dataset.value}`;
+  } else if (e.target.classList[0] == "email") {
+    div.textContent = `Email: ${e.target.dataset.value}`;
+  } else if (e.target.classList[0] == "twitter") {
+    div.textContent = `Twitter: ${e.target.dataset.value}`;
+  } else if (e.target.classList[0] == "vk") {
+    div.textContent = `Vk: ${e.target.dataset.value}`;
+  } else if (e.target.classList[0] == "facebook") {
+    div.textContent = `Facebook: ${e.target.dataset.value}`;
+  }
+  e.target.appendChild(div);
+}
+
+function delInfo(e) {
+  e.target.querySelector("div").remove();
+}
+
 async function delCont(id) {
   const delAns = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "DELETE"});
   console.log(delAns);
   return delAns.status;
 }
+
 async function editCont(id) {
   
 }
-
 
 async function createCont(data) {
   
@@ -96,7 +118,22 @@ function createWindow(type = "edit") {
       document.querySelector(".back").remove();
       document.querySelector(".window").remove();
     })
-
+    create.addEventListener('click', async (e) => {
+      if (name.value.length == 0 || surname.value.length == 0) {
+        const err = document.createElement('div');
+        err.classList.add("error");
+        err.textContent = "Ошибка: новая модель организационной деятельности предполагает независимые способы реализации поставленных обществом задач!";
+        document.querySelector(".window").insertBefore(err, document.querySelector(".btn_create"));
+        return;
+      }
+      const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
+      document.querySelectorAll(".data").forEach(e => {
+        let type = e.querySelector(".select_contcts").value;
+        let value = e.querySelector('input').value;
+        obj.contacts.push({type, value});
+      })
+      const ans = await fetch("http://localhost:3000/api/clients", {method: "POST", body: JSON.stringify(obj)});
+    })
     form.appendChild(surname);
     form.appendChild(name);
     form.appendChild(lastname);
@@ -109,9 +146,7 @@ function createWindow(type = "edit") {
 
 async function start() {
   const ans = await fetch("http://localhost:3000/api/clients");
-  console.log(`Status: ${ans.status}`);
   const data = await ans.json();
-  console.log(data);
   const place = document.querySelector(".main__load")
   for (let i = 0; i < data.length; i++) {
     const temp = document.getElementById("contact").content.cloneNode(true);
@@ -122,8 +157,32 @@ async function start() {
     temp.querySelector(".dateEdit").textContent = getDate(data[i].updatedAt);
     temp.querySelector(".timeEdit").textContent = getTime(data[i].updatedAt);
     for (let j = 0; j < data[i].contacts.length; j++) {
+      if (data[i].contacts.length > 5 && j >= 4) {
+        const dop = document.createElement('div');
+        dop.classList.add("contact_icons_more");
+        dop.textContent = `+${data[i].contacts.length - 4}`;
+        temp.querySelector(".contacts").appendChild(dop);
+        dop.addEventListener('click', e => {
+          document.querySelector(".contacts").classList.add("contacts_true");
+          dop.remove();
+          for (let t = 4; t < data[i].contacts.length; t++) {
+            const contact = document.createElement('div');
+            contact.classList.add(data[i].contacts[t].type);
+            contact.classList.add("contact_icon");
+            contact.dataset.value = data[i].contacts[t].value;
+            contact.addEventListener('mouseenter', moreInfo);
+            contact.addEventListener('mouseleave', delInfo);
+            document.querySelector(".contacts").appendChild(contact);
+          }
+        })
+        break;
+      }
       const contact = document.createElement('div');
       contact.classList.add(data[i].contacts[j].type);
+      contact.classList.add("contact_icon");
+      contact.dataset.value = data[i].contacts[j].value;
+      contact.addEventListener('mouseenter', moreInfo);
+      contact.addEventListener('mouseleave', delInfo);
       temp.querySelector(".contacts").appendChild(contact);
     }
     temp.querySelector(".edit").addEventListener('click', e => {

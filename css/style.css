@@ -287,13 +287,70 @@ body {
 }
 
 .tel {
-    width: 16px;
-    height: 16px;
-    background-color: #9873FF;
+    background-image: url(../img/phone.svg);
+}
+
+.vk {
+    background-image: url(../img/vk.svg);
+
+}
+
+.email {
+    background-image: url(../img/mail.svg);
+}
+
+.twitter {
+    background-image: url(../img/twitter.svg);
+}
+
+.facebook {
+    background-image: url(../img/fb.svg);
 }
 
 .contacts {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 7px;
+    max-width: 108px;
+    flex-wrap: nowrap;
+}
+
+.contacts_true {
+    flex-wrap: wrap;
+}
+
+.contact_icon, .contact_icons_more {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+.contact_icons_more {
+    box-sizing: border-box;
+    border: 1px solid #9873FF;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact_info {
+    position: absolute;
+    bottom: 25px;
+    font-size: 12px;
+    text-wrap: nowrap;
+    left: -500%;
+    background-color: black;
+    color: white;
+    padding: 7px 15px;
+}
+
+.error {
+    color: #F06A4D;
+    font-size: 10px;
+    text-align: center;
 }
