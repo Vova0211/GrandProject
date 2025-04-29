@@ -36,6 +36,43 @@ async function delCont(id) {
   return delAns.status;
 }
 
+function confDelCont(id) {
+  const back = document.createElement("div");
+  back.classList.add("back");
+  const window = document.createElement("div");
+  window.classList.add("window");
+  const close = document.createElement('div');
+  close.classList.add("x");
+  window.appendChild(close);
+  document.body.appendChild(back);
+  document.body.appendChild(window);
+  close.addEventListener("click", e => {
+    document.querySelector(".back").remove();
+    document.querySelector(".window").remove();
+  });
+  const head = document.createElement("h2");
+  head.classList.add("window__head", "text-center");
+  head.textContent = "Новый клиент";
+  window.appendChild(head);
+  const descr = document.createElement('p');
+  descr.textContent = "Вы действительно хотите удалить данного клиента?";
+  descr.classList.add('text-center');
+  window.appendChild(descr);
+  const btnDel = document.createElement('button');
+  btnDel.classList.add("btn_create");
+  btnDel.textContent = "Удалить";
+  btnDel.addEventListener('click', e => {delCont(id)});
+  window.appendChild(btnDel);
+  const cancel = document.createElement('p');
+    cancel.classList.add("btn_cancel");
+    cancel.textContent = "Отмена";
+    cancel.addEventListener("click", e => {
+      document.querySelector(".back").remove();
+      document.querySelector(".window").remove();
+    });
+    window.appendChild(cancel);
+}
+
 async function editWind(id) {
   const ans = await fetch(`http://localhost:3000/api/clients/${id}`);
   const data = await ans.json();
@@ -161,7 +198,7 @@ function createWindow(type = "edit") {
   back.classList.add("back");
   const window = document.createElement("div");
   window.classList.add("window");
-  
+  const close = document.createElement('div');
   close.classList.add("x");
   window.appendChild(close);
   document.body.appendChild(back);
@@ -229,7 +266,7 @@ function createWindow(type = "edit") {
     cancel.addEventListener("click", e => {
       document.querySelector(".back").remove();
       document.querySelector(".window").remove();
-    })
+    });
     create.addEventListener('click', async (e) => {
       if (name.value.length == 0 || surname.value.length == 0) {
         const err = document.createElement('div');
@@ -351,7 +388,7 @@ async function start() {
     temp.querySelector(".edit").addEventListener('click', e => {
       createWindow("edit", e);
     });
-    temp.querySelector(".delete").addEventListener('click', e => {delCont(data[i].id)});
+    temp.querySelector(".delete").addEventListener('click', e => {confDelCont(data[i].id)});
     place.appendChild(temp);
   }
   document.querySelector(".main__load").style = 'background-image: url("");';
