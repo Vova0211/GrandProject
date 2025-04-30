@@ -245,6 +245,7 @@ body {
     border: none;
     border-bottom: 1px solid gray;
     margin-bottom: 7%;
+    outline: none;
 }
 
 .window__form {
@@ -300,10 +301,14 @@ body {
     min-height: 30px;
 }
 
-.data > section, input {
+.data > * {
     border-radius: 0;
     border: 1px solid grey;
     outline: none;
+}
+
+.data > input {
+    width: 100%;
 }
 
 .del_div {
@@ -388,11 +393,13 @@ body {
 
 .p_id {
     position: absolute;
-    top: 12px;
-    left: 48%;
+    color: gray;
+    top: 30px;
+    left: 5%;
 }
 
 th {
     cursor: pointer;
     user-select: none;
+
 }

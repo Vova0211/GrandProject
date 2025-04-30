@@ -32,7 +32,6 @@ function delInfo(e) {
 
 async function delCont(id) {
   const delAns = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "DELETE"});
-  console.log(delAns);
   return delAns.status;
 }
 
@@ -76,7 +75,6 @@ function confDelCont(id) {
 async function editWind(id) {
   const ans = await fetch(`http://localhost:3000/api/clients/${id}`);
   const data = await ans.json();
-  console.log(data);
   const window = document.querySelector('.window');
   const head = document.createElement("h2");
   
@@ -92,7 +90,10 @@ async function editWind(id) {
   form.classList.add("window__form");
   head.classList.add("window__head");
   head.textContent = "Изменить данные";
-  surname.placeholder = "Фамилия";
+  surname.placeholder = "Фамилия*";
+  surname.classList.add("surname");
+  name.classList.add("name*");
+  lastname.classList.add("lastname");
   name.placeholder = "Имя";
   lastname.placeholder = "Отчество";
   surname.value = data.surname;
@@ -192,7 +193,7 @@ async function editWind(id) {
     window.appendChild(cancel);
 }
 
-function createWindow(type = "edit") {
+function createWindow(type = "edit", elem) {
   const back = document.createElement("div");
   back.classList.add("back");
   const window = document.createElement("div");
@@ -207,7 +208,7 @@ function createWindow(type = "edit") {
     document.querySelector(".window").remove();
   });
   if (type === "edit") {
-    const id = arguments[1].target.parentNode.querySelector(".id").textContent;
+    const id = elem.target.parentNode.parentNode.querySelector(".id").textContent;
     editWind(id);
   } else {
     const head = document.createElement("h2");
@@ -219,8 +220,12 @@ function createWindow(type = "edit") {
     const surname = document.createElement("input");
     const name = document.createElement("input");
     const lastname = document.createElement("input");
-    surname.placeholder = "Фамилия";
-    name.placeholder = "Имя";
+    // name.placeholder = `Имя`;
+    surname.classList.add("surname");
+    name.classList.add("name");
+    lastname.classList.add("lastname");
+    surname.placeholder = "Фамилия*";
+    name.placeholder = "Имя*";
     lastname.placeholder = "Отчество";
 
     const add = document.createElement('div');
@@ -303,7 +308,6 @@ async function searchContact(value) {
   const place = document.querySelector(".main__load");
   let arr = [...document.getElementsByClassName("contact")];
   arr = arr.filter(a => res.includes(a.childNodes[1].textContent));
-  console.log(arr);
   document.querySelectorAll(".contact").forEach(e => {e.remove();});
   arr.forEach(el => {place.appendChild(el)});
 }
