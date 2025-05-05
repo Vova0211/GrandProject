@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/media.css">
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <script src="./script.js" defer></script>
+    <script src="./src/sort.js" defer></script>
 </head>
 
 <body>
@@ -56,11 +57,75 @@
             </div>
         </div>
     </template>
-    <template id="dataToContact">
-        <option value="tel">Телефон</option>
-        <option value="twitter">Twitter</option>
-        <option value="email">Email</option>
-        <option value="vk">Vk</option>
-        <option value="facebook">Facebook</option>
+    <template id="contactData">
+        <div class="data">
+            <select class="select_contcts">
+                <option value="tel">Телефон</option>
+                <option value="twitter">Twitter</option>
+                <option value="email">Email</option>
+                <option value="vk">Vk</option>
+                <option value="facebook">Facebook</option>
+            </select>
+            <input placeholder="Введите данные контакта">
+            <div class="del_div">
+                <img class="delDataBtn" src="img/cancel.svg">
+            </div>
+        </div>
+    </template>
+    <template id="editWindow">
+            <h2 class="window__head">Изменить данные</h2>
+            <p class="p_id">ID: 181912</p>
+            <form class="window__form">
+                <div class="surname_div">
+                    <input class="surname names" placeholder=" "><label>Фамилия<span>*</span></label>
+                </div>
+                <div class="name_div">
+                    <input class="name names" placeholder=" "><label>Имя<span>*</span></label>
+                </div>
+                <div class="lastname_div">
+                    <input class="lastname names" placeholder=" "><label>Отчество</label>
+                </div>
+            </form>
+            <div class="add_contact">
+                <div class="add_btn">
+                    <img src="img/create.svg">
+                    <h3>Добавить контакт</h3>
+                </div>
+                
+            </div>
+            <button class="btn_create">Сохранить</button>
+            <p class="btn_cancel">Удалить клиента</p>
+    </template>
+    <template id="createWindow">
+        <h2 class="window__head">Новый клиент</h2>
+            <form class="window__form">
+                <div class="surname_div">
+                    <input class="surname names" placeholder=" "><label>Фамилия<span>*</span></label>
+                </div>
+                <div class="name_div">
+                    <input class="name names" placeholder=" "><label>Имя<span>*</span></label>
+                </div>
+                <div class="lastname_div">
+                    <input class="lastname names" placeholder=" "><label>Отчество</label>
+                </div>
+            </form>
+            <div class="add_contact">
+                <div class="add_btn">
+                    <img src="img/create.svg">
+                    <h3>Добавить контакт</h3>
+                </div>
+                
+            </div>
+            <button class="btn_create">Сохранить</button>
+            <p class="btn_cancel">Отмена</p>
+    </template>
+    <template id="deleteWindow">
+        <div class="window">
+            <div class="x"></div>
+            <h2 class="window__head text-center">Новый клиент</h2>
+            <p class="text-center">Вы действительно хотите удалить данного клиента?</p>
+            <button class="btn_create">Удалить</button>
+            <p class="btn_cancel">Отмена</p>
+        </div>
     </template>
 </html>
