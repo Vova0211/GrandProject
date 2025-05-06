@@ -218,20 +218,22 @@ async function loadCards() {
     temp.querySelector(".delete").addEventListener('click', e => {confDelCont(data[i].id)});
     place.appendChild(temp);
   }
+  start()
 }
 function start() {
-  document.querySelector(".main__load").style = 'background-image: url("");';
-  document.querySelector('.main__btn').addEventListener('click', e => {
-    createWindow("create");
-  })
-  document.querySelector('.header__search').addEventListener('keydown', e => {
-    if (e.keyCode == 13) {
-      searchContact(e.target.value);
-      e.target.value = "";
-    }
-  })
+  if (document.querySelectorAll(".contact").length > 0) {
+    document.querySelector(".main__load").style = 'background-image: url("");';
+    document.querySelector('.main__btn').addEventListener('click', e => {
+      createWindow("create");
+    })
+    document.querySelector('.header__search').addEventListener('keydown', e => {
+      if (e.keyCode == 13) {
+        searchContact(e.target.value);
+        e.target.value = "";
+      }
+    })
+  }
 }
 loadCards()
-start()
 // Made by chatGPT
 // Grazhdantcev is a god
