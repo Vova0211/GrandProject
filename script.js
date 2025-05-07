@@ -73,6 +73,7 @@ async function editWind(id) {
       add.appendChild(divData);
     }
     document.querySelector(".add_btn").addEventListener("click", e => {
+      if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
       document.querySelector(".add_contact").appendChild(contact);
@@ -123,6 +124,7 @@ function createWindow(type = "edit", elem) {
     const name = document.querySelector(".name");
     const lastname = document.querySelector(".lastname");
     document.querySelector(".add_btn").addEventListener("click", e => {
+      if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
       document.querySelector(".add_contact").appendChild(contact);
