@@ -70,13 +70,13 @@ async function editWind(id) {
       divData.querySelector('select').value = data.contacts[i].type;
       divData.querySelector('input').value = data.contacts[i].value;
       divData.querySelector(".del_div").addEventListener("click", e => {e.target.parentNode.remove()})
-      add.appendChild(divData);
+      document.querySelector(".data_div").appendChild(divData);
     }
     document.querySelector(".add_btn").addEventListener("click", e => {
       if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
-      document.querySelector(".add_contact").appendChild(contact);
+      document.querySelector(".data_div").appendChild(contact);
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
       delCont(id);
@@ -127,7 +127,7 @@ function createWindow(type = "edit", elem) {
       if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
-      document.querySelector(".add_contact").appendChild(contact);
+      document.querySelector(".data_div").appendChild(contact);
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
       document.querySelector(".back").remove();
