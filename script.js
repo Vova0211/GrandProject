@@ -1,3 +1,4 @@
+let globalContacts = [];
 function getDate(str) {
   str = str.split("T")[0];
   let newStr = `${str.slice(-2)}.${str.slice(5, 7)}.${str.slice(0, 4)}`;
@@ -153,15 +154,11 @@ function createWindow(type = "edit", elem) {
 }
 
 async function searchContact(value) {
-  if (value == "") {
-    loadCards();
-    return;
-  }
   const ans = await fetch(`http://localhost:3000/api/clients?search=${value}`);
   let res = await ans.json();
   res = res.map(a => a.id);
   const place = document.querySelector(".main__load");
-  let arr = [...document.getElementsByClassName("contact")];
+  let arr = [...globalContacts];
   arr = arr.filter(a => res.includes(a.childNodes[1].textContent));
   document.querySelectorAll(".contact").forEach(e => {e.remove();});
   arr.forEach(el => {place.appendChild(el)});
@@ -221,6 +218,7 @@ async function loadCards() {
     place.appendChild(temp);
   }
   start()
+  globalContacts = document.querySelectorAll(".contact");
 }
 function start() {
   if (document.querySelectorAll(".contact").length > 0) {
@@ -230,6 +228,12 @@ function start() {
     })
     document.querySelector('.header__search').addEventListener('keydown', e => {
       if (e.keyCode == 13) {
+        if (e.target.value == "" && document.querySelectorAll(".contact").length < globalContacts.length) {
+          loadCards();
+          return;
+        } else if (e.target.value == "") {
+          return;
+        }
         searchContact(e.target.value);
         e.target.value = "";
       }

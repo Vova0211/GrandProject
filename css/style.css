@@ -101,6 +101,7 @@ body {
 .main__load {
     min-height: 300px;
     max-height: 400px;
+    overflow-y: visible;
     overflow-y: auto;
     margin-bottom: 40px;
     background-color: #FFFFFF;
@@ -444,6 +445,7 @@ label > span {
 
 .contact_info {
     position: absolute;
+    
     bottom: 25px;
     font-size: 12px;
     text-wrap: nowrap;
