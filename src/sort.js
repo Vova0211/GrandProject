@@ -15,9 +15,11 @@
       const arr = [...document.getElementsByClassName("contact")];
       if (document.querySelector(".fio_sort").src == "" || document.querySelector(".fio_sort").src == "http://127.0.0.1:5500/img/arrow_up.svg") {
         document.querySelector(".fio_sort").src = "../img/arrow_down.svg";
+        document.querySelector(".fio_sort_p").textContent = "А-Я"
         arr.sort((a, b) => a.childNodes[3].textContent.localeCompare(b.childNodes[3].textContent));
       } else {
         document.querySelector(".fio_sort").src = "../img/arrow_up.svg";
+        document.querySelector(".fio_sort_p").textContent = "Я-А"
         arr.sort((a, b) => b.childNodes[3].textContent.localeCompare(a.childNodes[3].textContent));
       }
       document.querySelectorAll(".contact").forEach(e => {e.remove();})

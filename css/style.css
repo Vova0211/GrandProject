@@ -99,6 +99,20 @@ body {
     line-height: 16px;
     color: #B0B0B0;
     user-select: none;
+    position: relative;
+}
+.main__hcol > p {
+    font-size: 10px;
+    margin: 0;
+    color: #9873FF;
+    position: absolute;
+    left: 153px;
+    bottom: -1px;
+}
+
+.id_sort {
+    position: absolute;
+    left: 12px;
 }
 
 .main__load {
@@ -230,10 +244,11 @@ body {
     position: absolute;
     z-index: 3;
     left: 33%;
-    top: 10vh;
+    top: -100vh;
     width: 30%;
     background-color: white;
 }
+
 .text-center {
     text-align: center;
 }
@@ -253,6 +268,7 @@ body {
     margin-bottom: 10%;
     margin-left: 5%;
     margin-right: 5%;
+    user-select: none;
 }
 
 .window__form > div {

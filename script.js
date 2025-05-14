@@ -43,6 +43,12 @@ function confDelCont(id) {
   back.classList.add("back");
   document.body.appendChild(back);
   document.body.appendChild(document.getElementById("deleteWindow").content.cloneNode(true));
+  let start = Date.now() + 200;
+  let timer = setInterval(e => {
+    let timePassed = Date.now() - start ;
+    document.querySelector(".window").style = `top: ${timePassed / 10}vh`
+    if (timePassed > 100) clearInterval(timer);
+  }, 20);
   document.querySelector(".x").addEventListener("click", e => {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
@@ -112,6 +118,12 @@ function createWindow(type = "edit", elem) {
   window.appendChild(close);
   document.body.appendChild(back);
   document.body.appendChild(window);
+  let start = Date.now() + 200;
+  let timer = setInterval(e => {
+    let timePassed = Date.now() - start ;
+    window.style = `top: ${timePassed / 10}vh`
+    if (timePassed > 100) clearInterval(timer);
+  }, 20);
   close.addEventListener("click", e => {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
