@@ -178,4 +178,11 @@
   gap: 40%;
 
 }
+  .window {
+    width: 95%;
+    position: fixed;
+  }
+  .back {
+    position: fixed;
+  }
 }
