@@ -98,8 +98,7 @@ async function editWind(id) {
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
       delCont(id);
-      document.querySelector(".back").remove();
-      document.querySelector(".window").remove();
+      location.reload()
     })
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
       if (name.value.length == 0 || surname.value.length == 0) {
