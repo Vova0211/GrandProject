@@ -1,6 +1,5 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 export default {
     module: {
         rules: [
@@ -53,7 +52,7 @@ export default {
         new HtmlWebpackPlugin({
             template: './index.html', 
             filename: 'index.html', 
-
+            favicon: 'img/logo.png'
         }),
     ],
 

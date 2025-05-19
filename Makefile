@@ -1,4 +1,5 @@
 start:
-	node crm-backend/index.js
-run: 
-	webpack serve --open --mode development
+	node crm-backend/index.js &
+dev: 
+	node crm-backend/index.js &
+	npm start &
