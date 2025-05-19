@@ -62,7 +62,7 @@ function confDelCont(id) {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
   });
-  document.querySelector(".btn_create").addEventListener('click', e => {delCont(id)});
+  document.querySelector(".btn_create").addEventListener('click', e => {delCont(id);location.reload()});
   document.querySelector('.btn_cancel').addEventListener("click", e => {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
@@ -103,9 +103,10 @@ async function editWind(id) {
     })
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
       if (name.value.length == 0 || surname.value.length == 0) {
+        if (document.querySelectorAll(".error").length == 1) return;
         const err = document.createElement('div');
         err.classList.add("error");
-        err.textContent = "Ошибка: новая модель организационной деятельности предполагает независимые способы реализации поставленных обществом задач!";
+        err.textContent = "Ошибка: все обязательные поля должны быть заполнены!";
         document.querySelector(".window").insertBefore(err, document.querySelector(".btn_create"));
         return;
       }
@@ -116,6 +117,7 @@ async function editWind(id) {
         obj.contacts.push({type, value});
       })
       const ans = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "PATCH", body: JSON.stringify(obj)});
+      location.reload();
     })
 }
 
@@ -161,9 +163,10 @@ function createWindow(type = "edit", elem) {
     });
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
       if (name.value.length == 0 || surname.value.length == 0) {
+        if (document.querySelectorAll(".error").length == 1) return;
         const err = document.createElement('div');
         err.classList.add("error");
-        err.textContent = "Ошибка: новая модель организационной деятельности предполагает независимые способы реализации поставленных обществом задач!";
+        err.textContent = "Ошибка: все обязательные поля должны быть заполнены!";
         document.querySelector(".window").insertBefore(err, document.querySelector(".btn_create"));
         return;
       }
@@ -174,6 +177,7 @@ function createWindow(type = "edit", elem) {
         obj.contacts.push({type, value});
       })
       const ans = await fetch("http://localhost:3000/api/clients", {method: "POST", body: JSON.stringify(obj)});
+      location.reload()
     })
   }
 }
