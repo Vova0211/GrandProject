@@ -185,4 +185,8 @@
   .back {
     position: fixed;
   }
+  .main {
+    position: relative;
+    top: 35px;
+  }
 }

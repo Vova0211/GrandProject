@@ -1,3 +1,12 @@
+import "./css/style.css";
+import "./css/media.css"
+import { sort } from "./src/sort.js";
+import logo from "./img/logo.png";
+import addContSvg from "./img/create.svg";
+import cancelContSvg from "./img/cancel.svg";
+
+document.querySelector('.header__img').src = logo;
+
 let globalContacts = [];
 function getDate(str) {
   str = str.split("T")[0];
@@ -64,7 +73,7 @@ async function editWind(id) {
   const ans = await fetch(`http://localhost:3000/api/clients/${id}`);
   const data = await ans.json();
   document.querySelector(".window").appendChild(document.getElementById("editWindow").content.cloneNode(true));
-  
+  document.querySelector(".add_contact_img").src = addContSvg;
   const surname = document.querySelector(".surname");
   const name = document.querySelector(".name");
   const lastname = document.querySelector(".lastname");
@@ -74,6 +83,7 @@ async function editWind(id) {
     const add = document.querySelector('.add_contact');
     for (let i = 0; i < data.contacts.length; i++) {
       const divData = document.getElementById("contactData").content.cloneNode(true);
+      divData.querySelector(".delDataBtn").src = cancelContSvg;
       divData.querySelector('select').value = data.contacts[i].type;
       divData.querySelector('input').value = data.contacts[i].value;
       divData.querySelector(".del_div").addEventListener("click", e => {e.target.parentNode.remove()})
@@ -83,6 +93,7 @@ async function editWind(id) {
       if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
+      contact.querySelector(".delDataBtn").src = cancelContSvg;
       document.querySelector(".data_div").appendChild(contact);
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
@@ -133,12 +144,14 @@ function createWindow(type = "edit", elem) {
     editWind(id);
   } else {
     document.querySelector(".window").appendChild(document.getElementById("createWindow").content.cloneNode(true));
+    document.querySelector(".add_contact_img").src = addContSvg;
     const surname = document.querySelector(".surname");
     const name = document.querySelector(".name");
     const lastname = document.querySelector(".lastname");
     document.querySelector(".add_btn").addEventListener("click", e => {
       if (e.target.parentNode.querySelectorAll(".data").length == 10) return;
       const contact = document.getElementById("contactData").content.cloneNode(true);
+      contact.querySelector(".delDataBtn").src = cancelContSvg;
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
       document.querySelector(".data_div").appendChild(contact);
     });
@@ -253,5 +266,6 @@ function start() {
   }
 }
 loadCards()
+sort();
 // Made by chatGPT
 // Grazhdantcev is a god
