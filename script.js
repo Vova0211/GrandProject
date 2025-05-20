@@ -44,11 +44,13 @@ function delInfo(e) {
 
 async function delCont(id) {
   const delAns = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "DELETE"});
+  loadCards();
   return delAns.status;
 }
 
 function confDelCont(id) {
   const back = document.createElement("div");
+  back.addEventListener("click", e => {document.querySelector('.back').remove();document.querySelector('.window').remove()});
   back.classList.add("back");
   document.body.appendChild(back);
   document.body.appendChild(document.getElementById("deleteWindow").content.cloneNode(true));
@@ -62,7 +64,11 @@ function confDelCont(id) {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
   });
-  document.querySelector(".btn_create").addEventListener('click', e => {delCont(id);location.reload()});
+  document.querySelector(".btn_create").addEventListener('click', e => {
+    delCont(id);
+    document.querySelector('.window').remove();
+    document.querySelector('.back').remove();
+  });
   document.querySelector('.btn_cancel').addEventListener("click", e => {
     document.querySelector(".back").remove();
     document.querySelector(".window").remove();
@@ -98,10 +104,17 @@ async function editWind(id) {
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
       delCont(id);
-      location.reload()
+      document.querySelector('.window').remove();
+      document.querySelector('.back').remove();
     })
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
-      if (name.value.length == 0 || surname.value.length == 0) {
+      const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
+      document.querySelectorAll(".data").forEach(e => {
+        let type = e.querySelector(".select_contcts").value;
+        let value = e.querySelector('input').value;
+        obj.contacts.push({type, value});
+      })
+      if (name.value.length == 0 || surname.value.length == 0 || obj.contacts.map(e => e.value).filter(e => e.length > 0).length < obj.contacts.map(e => e.type).length) {
         if (document.querySelectorAll(".error").length == 1) return;
         const err = document.createElement('div');
         err.classList.add("error");
@@ -109,18 +122,15 @@ async function editWind(id) {
         document.querySelector(".window").insertBefore(err, document.querySelector(".btn_create"));
         return;
       }
-      const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
-      document.querySelectorAll(".data").forEach(e => {
-        let type = e.querySelector(".select_contcts").value;
-        let value = e.querySelector('input').value;
-        obj.contacts.push({type, value});
-      })
       const ans = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "PATCH", body: JSON.stringify(obj)});
-      location.reload();
+      document.querySelector('.window').remove();
+      document.querySelector('.back').remove();
+      loadCards();
     })
 }
 
 function createWindow(type = "edit", elem) {
+  if (document.querySelectorAll(".window").length !== 0) return;
   const back = document.createElement("div");
   back.classList.add("back");
   const window = document.createElement("div");
@@ -128,6 +138,7 @@ function createWindow(type = "edit", elem) {
   const close = document.createElement('div');
   close.classList.add("x");
   window.appendChild(close);
+  back.addEventListener("click", e => {back.remove();window.remove()});
   document.body.appendChild(back);
   document.body.appendChild(window);
   let start = Date.now() + 200;
@@ -161,7 +172,13 @@ function createWindow(type = "edit", elem) {
       document.querySelector(".window").remove();
     });
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
-      if (name.value.length == 0 || surname.value.length == 0) {
+      const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
+      document.querySelectorAll(".data").forEach(e => {
+        let type = e.querySelector(".select_contcts").value;
+        let value = e.querySelector('input').value;
+        obj.contacts.push({type, value});
+      });
+      if (name.value.length == 0 || surname.value.length == 0 || obj.contacts.map(e => e.value).filter(e => e.length > 0).length < obj.contacts.map(e => e.type).length) {
         if (document.querySelectorAll(".error").length == 1) return;
         const err = document.createElement('div');
         err.classList.add("error");
@@ -169,14 +186,10 @@ function createWindow(type = "edit", elem) {
         document.querySelector(".window").insertBefore(err, document.querySelector(".btn_create"));
         return;
       }
-      const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
-      document.querySelectorAll(".data").forEach(e => {
-        let type = e.querySelector(".select_contcts").value;
-        let value = e.querySelector('input').value;
-        obj.contacts.push({type, value});
-      })
       const ans = await fetch("http://localhost:3000/api/clients", {method: "POST", body: JSON.stringify(obj)});
-      location.reload()
+      document.querySelector('.window').remove();
+      document.querySelector('.back').remove();
+      loadCards();
     })
   }
 }
@@ -247,6 +260,13 @@ async function loadCards() {
   }
   start()
   globalContacts = document.querySelectorAll(".contact");
+  let imgs = [...document.querySelectorAll('img')].slice(1);
+  imgs.forEach(e => {
+    if (e.classList[0] == "fio_sort") {
+      e.parentNode.querySelector('p').textContent = "";
+    }
+    e.src = "";
+  })
 }
 function start() {
   if (document.querySelectorAll(".contact").length > 0) {
