@@ -1,5 +1,4 @@
 @import url(normolize.css);
-
 @font-face {
     font-family: "Open Sans";
     src: url(../fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf);
@@ -140,6 +139,13 @@ body {
     background-color: transparent;
     border: 1px solid #9873FF;
     color: #9873FF;
+}
+
+.main__btn_div {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    position: fixed;
 }
 
 .main__btn span {

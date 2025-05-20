@@ -99,9 +99,8 @@
     width: 100vw;
     justify-content: center;
   }
-  .main__btn {
-    position: fixed;
-    transform: translateX(31vw);
+  .main__btn__div {
+    left: 0;
   }
   .header__img {
     width: 35px;

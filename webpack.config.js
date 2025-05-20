@@ -44,7 +44,7 @@ export default {
   
     devServer: {
         static: path.resolve('dist'),
-        port: 3100,
+        port: 5000,
         open: true,
         hot: true,
     },

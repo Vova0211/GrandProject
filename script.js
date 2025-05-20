@@ -1,5 +1,5 @@
 import "./css/style.css";
-import "./css/media.css"
+import "./css/media.css";
 import { sort } from "./src/sort.js";
 import logo from "./img/logo.png";
 import addContSvg from "./img/create.svg";
