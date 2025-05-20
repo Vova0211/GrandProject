@@ -8,9 +8,13 @@ git clone https://github.com/Vova0211/GrandProject
 npm i
 ```
    ```
-make start
+npm start
 ``` 
 ## Если не запустилось: 
   ```
-make fix
+	npm run build
+```
+И
+   ```
+   npm start
 ```
