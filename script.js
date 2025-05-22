@@ -212,7 +212,9 @@ async function loadCards() {
   document.querySelectorAll(".contact").forEach(e => {e.remove();});
   for (let i = 0; i < data.length; i++) {
     const temp = document.getElementById("contact").content.cloneNode(true);
-    temp.querySelector(".id").textContent = data[i].id;
+    const id = temp.querySelector(".id");
+    id.textContent = data[i].id;
+    id.addEventListener("click", e => {navigator.clipboard.writeText(`http://localhost:5000/?contact=${e.target.textContent}`)});
     temp.querySelector(".fio").textContent = `${data[i].surname} ${data[i].name} ${data[i].lastName}`;
     temp.querySelector(".dateCreate").parentNode.dataset.time = data[i].createdAt;
     temp.querySelector(".dateCreate").textContent = getDate(data[i].createdAt);
@@ -269,6 +271,7 @@ async function loadCards() {
   })
 }
 function start() {
+  document.querySelector(".header__button").addEventListener('click', e => {document.body.classList.toggle("dark_theme")});
   if (document.querySelectorAll(".contact").length > 0) {
     document.querySelector(".main__load").style = 'background-image: url("");';
     document.querySelector('.main__btn').addEventListener('click', e => {
@@ -288,6 +291,33 @@ function start() {
     })
   }
 }
+
+async function contactPage() {
+  const urlParams = new URLSearchParams(location.search);
+  const id = urlParams.get('contact');
+  if (id == null) return;
+  const back = document.createElement("div");
+  back.classList.add("back");
+  const window = document.createElement("div");
+  window.style.top = "12vh";
+  window.classList.add("window");
+  const close = document.createElement('div');
+  close.classList.add("x");
+  window.appendChild(close);
+  back.addEventListener("click", e => {location.href = "http://localhost:5000"});
+  document.body.appendChild(back);
+  document.body.appendChild(window);
+  close.addEventListener("click", e => {location.href = "http://localhost:5000"});
+  editWind(id);
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches}) => {
+  if (matches) {
+    console.log("dark");
+  } else {
+    console.log("light");
+  }
+})
+contactPage()
 loadCards()
 sort();
 // Made by chatGPT

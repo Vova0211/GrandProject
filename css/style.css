@@ -17,6 +17,15 @@ body {
     box-shadow: 0px 9.03012px 27.0904px rgba(176, 190, 197, 0.32), 0px 3.38629px 5.64383px rgba(176, 190, 197, 0.32);
 }
 
+.header__button {
+    position: absolute;
+    right: 20px;
+    height: 45px;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgba(51, 51, 51, 0.5);
+}
+
 .header__img {
     margin-right: 53px;
 }
@@ -176,6 +185,7 @@ body {
 }
 
 .id {
+    cursor: pointer;
     grid-column: 1 / span 1;
     grid-row: 1;
 }
@@ -532,4 +542,9 @@ th {
 
 .delDataBtn {
     pointer-events: none;
+}
+
+.dark_theme, .dark_theme > .header, .dark_theme > .main > .main__load, .dark_theme > .header > .header__search, .dark_theme > .header > .header__search::placeholder, .dark_theme > .header > .header__button, .dark_theme > .main__title, .dark_theme > .main > .contact {
+    background-color: rgb(45, 45, 45);
+    color: white;
 }
