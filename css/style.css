@@ -131,6 +131,7 @@ body {
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 40px;
+    margin-top: 5px;
     background-color: #FFFFFF;
     background-image: url(../img/load.png);
     background-position: center;
@@ -139,7 +140,9 @@ body {
 
 .main__btn {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     margin: 0 auto;
     padding: 12px 26px;
     border: none;
@@ -175,9 +178,7 @@ body {
     border-top: none;
     padding-top: 30px;
 }
-.contact:nth-last-child(1) {
-    border-bottom: 1px solid #C8C5D1;
-}
+
 .d-flex {
     display: flex;
     flex-direction: row;
@@ -433,6 +434,10 @@ label > span {
     background-image: url(../img/phone.svg);
 }
 
+.dark_theme > .main > .main__load > .contact > .contacts > .tel {
+    background-image: url(../img/phoneDark.svg);
+}
+
 .vk {
     background-image: url(../img/vk.svg);
 
@@ -521,6 +526,7 @@ label > span {
     color: #F06A4D;
     font-size: 10px;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .p_id {
@@ -544,7 +550,26 @@ th {
     pointer-events: none;
 }
 
-.dark_theme, .dark_theme > .header, .dark_theme > .main > .main__load, .dark_theme > .header > .header__search, .dark_theme > .header > .header__search::placeholder, .dark_theme > .header > .header__button, .dark_theme > .main__title, .dark_theme > .main > .contact {
+.dark_theme, .dark_theme > .header, .dark_theme > .main > .main__load, .dark_theme > .header > .header__search, .dark_theme > .header > .header__search::placeholder, .dark_theme > .header > .header__button, .dark_theme > .main > .main__title, .dark_theme > .window > .window__form > div > input, .dark_theme > .window > .add_contact > .data_div > .data > *{
     background-color: rgb(45, 45, 45);
     color: white;
+}
+.dark_theme > .main > .contact, .dark_theme > .window, .dark_theme > .window > .window__form > div > input {
+    background-color: rgb(49, 49, 49);
+}
+.dark_theme > .window > .window__form > div > label {
+    color: rgba(255, 255, 255, 0.7);
+}
+.dark_theme > .header > .header__button {
+    border: 1px solid white;
+}
+.dark_theme > .header > .header__search {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.dark_theme > .main > .main__load {
+    box-sizing: border-box;
+    box-shadow: 0 0 3px white;
+}
+.dark_theme > .window > .add_contact {
+    background-color: rgba(200, 197, 209, 0.1);
 }

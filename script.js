@@ -4,6 +4,7 @@ import { sort } from "./src/sort.js";
 import logo from "./img/logo.png";
 import addContSvg from "./img/create.svg";
 import cancelContSvg from "./img/cancel.svg";
+import phone from "./img/phone.svg";
 
 document.querySelector('.header__img').src = logo;
 
@@ -271,7 +272,6 @@ async function loadCards() {
   })
 }
 function start() {
-  document.querySelector(".header__button").addEventListener('click', e => {document.body.classList.toggle("dark_theme")});
   if (document.querySelectorAll(".contact").length > 0) {
     document.querySelector(".main__load").style = 'background-image: url("");';
     document.querySelector('.main__btn').addEventListener('click', e => {
@@ -292,6 +292,17 @@ function start() {
   }
 }
 
+function theme() {
+  const theme = JSON.parse(localStorage.getItem('theme')) ?? "light";
+  if (theme !== "light" && theme.state == "dark") {
+    document.body.classList.add("dark_theme"); 
+  }
+  document.querySelector(".header__button").addEventListener('click', e => {
+    document.body.classList.toggle("dark_theme");
+    localStorage.setItem("theme", JSON.stringify({state: document.body.classList.length > 0 ? "dark" : "light"}))
+  });
+}
+
 async function contactPage() {
   const urlParams = new URLSearchParams(location.search);
   const id = urlParams.get('contact');
@@ -310,15 +321,11 @@ async function contactPage() {
   close.addEventListener("click", e => {location.href = "http://localhost:5000"});
   editWind(id);
 }
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches}) => {
-  if (matches) {
-    console.log("dark");
-  } else {
-    console.log("light");
-  }
-})
+
 contactPage()
 loadCards()
 sort();
+theme();
+
 // Made by chatGPT
 // Grazhdantcev is a god
