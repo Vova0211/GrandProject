@@ -4,7 +4,6 @@ import { sort } from "./src/sort.js";
 import logo from "./img/logo.png";
 import addContSvg from "./img/create.svg";
 import cancelContSvg from "./img/cancel.svg";
-import phone from "./img/phone.svg";
 
 document.querySelector('.header__img').src = logo;
 
@@ -20,21 +19,25 @@ function getTime(str) {
   return newStr;
 }
 function moreInfo(e, dop) {
-  if (dop == true) {
-    return `${e.target.dataset.value}`; 
-  }
+  if (dop == true) return `${e.target.dataset.value}`;
   const div = document.createElement('div');
   div.classList.add("contact_info");
-  if (e.target.classList[0] == "tel") {
-    div.textContent = `Телефон: ${e.target.dataset.value}`;
-  } else if (e.target.classList[0] == "email") {
-    div.textContent = `Email: ${e.target.dataset.value}`;
-  } else if (e.target.classList[0] == "twitter") {
-    div.textContent = `Twitter: ${e.target.dataset.value}`;
-  } else if (e.target.classList[0] == "vk") {
-    div.textContent = `Vk: ${e.target.dataset.value}`;
-  } else if (e.target.classList[0] == "facebook") {
-    div.textContent = `Facebook: ${e.target.dataset.value}`;
+  switch (e.target.classList[0]) {
+    case "tel": 
+      div.textContent = `Телефон: ${e.target.dataset.value}`;
+      break;
+    case "email":
+      div.textContent = `Email: ${e.target.dataset.value}`;
+      break;
+    case "twitter":
+      div.textContent = `Twitter: ${e.target.dataset.value}`;
+      break;
+    case "vk":
+      div.textContent = `Vk: ${e.target.dataset.value}`;
+      break;
+    case "facebook":
+      div.textContent = `Facebook: ${e.target.dataset.value}`;
+      break;
   }
   e.target.appendChild(div);
 }
@@ -49,9 +52,14 @@ async function delCont(id) {
   return delAns.status;
 }
 
+function winRemove() {
+  document.querySelector('.window').remove();
+  document.querySelector('.back').remove();
+}
+
 function confDelCont(id) {
   const back = document.createElement("div");
-  back.addEventListener("click", e => {document.querySelector('.back').remove();document.querySelector('.window').remove()});
+  back.addEventListener("click", e => {winRemove()});
   back.classList.add("back");
   document.body.appendChild(back);
   document.body.appendChild(document.getElementById("deleteWindow").content.cloneNode(true));
@@ -61,19 +69,12 @@ function confDelCont(id) {
     document.querySelector(".window").style = `top: ${timePassed / 10}vh`
     if (timePassed > 100) clearInterval(timer);
   }, 20);
-  document.querySelector(".x").addEventListener("click", e => {
-    document.querySelector(".back").remove();
-    document.querySelector(".window").remove();
-  });
+  document.querySelector(".x").addEventListener("click", e => {winRemove()});
   document.querySelector(".btn_create").addEventListener('click', e => {
     delCont(id);
-    document.querySelector('.window').remove();
-    document.querySelector('.back').remove();
+    winRemove();
   });
-  document.querySelector('.btn_cancel').addEventListener("click", e => {
-    document.querySelector(".back").remove();
-    document.querySelector(".window").remove();
-  });
+  document.querySelector('.btn_cancel').addEventListener("click", e => {winRemove()});
 }
 
 async function editWind(id) {
@@ -105,8 +106,7 @@ async function editWind(id) {
     });
     document.querySelector(".btn_cancel").addEventListener("click", e => {
       delCont(id);
-      document.querySelector('.window').remove();
-      document.querySelector('.back').remove();
+      winRemove();
     })
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
       const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
@@ -124,8 +124,7 @@ async function editWind(id) {
         return;
       }
       const ans = await fetch(`http://localhost:3000/api/clients/${id}`, {method: "PATCH", body: JSON.stringify(obj)});
-      document.querySelector('.window').remove();
-      document.querySelector('.back').remove();
+      winRemove();
       loadCards();
     })
 }
@@ -148,10 +147,7 @@ function createWindow(type = "edit", elem) {
     window.style = `top: ${timePassed / 10}vh`
     if (timePassed > 100) clearInterval(timer);
   }, 20);
-  close.addEventListener("click", e => {
-    document.querySelector(".back").remove();
-    document.querySelector(".window").remove();
-  });
+  close.addEventListener("click", e => {winRemove()});
   if (type === "edit") {
     const id = elem.target.parentNode.parentNode.querySelector(".id").textContent;
     editWind(id);
@@ -168,10 +164,7 @@ function createWindow(type = "edit", elem) {
       contact.querySelector(".del_div").addEventListener('click', e => {e.target.parentNode.remove()})
       document.querySelector(".data_div").appendChild(contact);
     });
-    document.querySelector(".btn_cancel").addEventListener("click", e => {
-      document.querySelector(".back").remove();
-      document.querySelector(".window").remove();
-    });
+    document.querySelector(".btn_cancel").addEventListener("click", e => {winRemove()});
     document.querySelector(".btn_create").addEventListener('click', async (e) => {
       const obj = {name: name.value, surname: surname.value, lastName: lastname.value, contacts: []}
       document.querySelectorAll(".data").forEach(e => {
@@ -188,8 +181,7 @@ function createWindow(type = "edit", elem) {
         return;
       }
       const ans = await fetch("http://localhost:3000/api/clients", {method: "POST", body: JSON.stringify(obj)});
-      document.querySelector('.window').remove();
-      document.querySelector('.back').remove();
+      winRemove();
       loadCards();
     })
   }
@@ -204,6 +196,41 @@ async function searchContact(value) {
   arr = arr.filter(a => res.includes(a.childNodes[1].textContent));
   document.querySelectorAll(".contact").forEach(e => {e.remove();});
   arr.forEach(el => {place.appendChild(el)});
+}
+
+function loadContacts(data, parent) {
+  for (let i = 0; i < data.contacts.length; i++) {
+    if (data.contacts.length > 5 && i >= 4) {
+      const dop = document.createElement('div');
+      dop.classList.add("contact_icons_more");
+      dop.textContent = `+${data.contacts.length - 4}`;
+      parent.querySelector(".contacts").appendChild(dop);
+      dop.addEventListener('click', e => {
+        const div = e.target.parentNode;
+        div.classList.add("contacts_true");
+        dop.remove();
+        for (let j = 4; j < data.contacts.length; j++) {
+          const contact = document.createElement('div');
+          contact.classList.add(data.contacts[j].type);
+          contact.classList.add("contact_icon");
+          contact.dataset.value = data.contacts[j].value;
+          contact.addEventListener('mouseenter', moreInfo);
+          contact.addEventListener('click', e => {navigator.clipboard.writeText(moreInfo(e, true))});
+          contact.addEventListener('mouseleave', delInfo);
+          div.appendChild(contact);
+        }
+      })
+      break;
+    }
+    const contact = document.createElement('div');
+    contact.classList.add(data.contacts[i].type);
+    contact.classList.add("contact_icon");
+    contact.dataset.value = data.contacts[i].value;
+    contact.addEventListener('mouseenter', moreInfo);
+    contact.addEventListener('click', e => {navigator.clipboard.writeText(moreInfo(e, true))});
+    contact.addEventListener('mouseleave', delInfo);
+    parent.querySelector(".contacts").appendChild(contact);
+  }
 }
 
 async function loadCards() {
@@ -223,38 +250,7 @@ async function loadCards() {
     temp.querySelector(".dateEdit").parentNode.dataset.time = data[i].updatedAt;
     temp.querySelector(".dateEdit").textContent = getDate(data[i].updatedAt);
     temp.querySelector(".timeEdit").textContent = getTime(data[i].updatedAt);
-    for (let j = 0; j < data[i].contacts.length; j++) {
-      if (data[i].contacts.length > 5 && j >= 4) {
-        const dop = document.createElement('div');
-        dop.classList.add("contact_icons_more");
-        dop.textContent = `+${data[i].contacts.length - 4}`;
-        temp.querySelector(".contacts").appendChild(dop);
-        dop.addEventListener('click', e => {
-          const div = e.target.parentNode;
-          div.classList.add("contacts_true");
-          dop.remove();
-          for (let t = 4; t < data[i].contacts.length; t++) {
-            const contact = document.createElement('div');
-            contact.classList.add(data[i].contacts[t].type);
-            contact.classList.add("contact_icon");
-            contact.dataset.value = data[i].contacts[t].value;
-            contact.addEventListener('mouseenter', moreInfo);
-            contact.addEventListener('click', e => {navigator.clipboard.writeText(moreInfo(e, true))});
-            contact.addEventListener('mouseleave', delInfo);
-            div.appendChild(contact);
-          }
-        })
-        break;
-      }
-      const contact = document.createElement('div');
-      contact.classList.add(data[i].contacts[j].type);
-      contact.classList.add("contact_icon");
-      contact.dataset.value = data[i].contacts[j].value;
-      contact.addEventListener('mouseenter', moreInfo);
-      contact.addEventListener('click', e => {navigator.clipboard.writeText(moreInfo(e, true))});
-      contact.addEventListener('mouseleave', delInfo);
-      temp.querySelector(".contacts").appendChild(contact);
-    }
+    loadContacts(data[i], temp);
     temp.querySelector(".edit").addEventListener('click', e => {
       createWindow("edit", e);
     });
@@ -265,9 +261,7 @@ async function loadCards() {
   globalContacts = document.querySelectorAll(".contact");
   let imgs = [...document.querySelectorAll('img')].slice(1);
   imgs.forEach(e => {
-    if (e.classList[0] == "fio_sort") {
-      e.parentNode.querySelector('p').textContent = "";
-    }
+    if (e.classList[0] == "fio_sort") e.parentNode.querySelector('p').textContent = "";
     e.src = "";
   })
 }
@@ -294,9 +288,7 @@ function start() {
 
 function theme() {
   const theme = JSON.parse(localStorage.getItem('theme')) ?? "light";
-  if (theme !== "light" && theme.state == "dark") {
-    document.body.classList.add("dark_theme"); 
-  }
+  if (theme !== "light" && theme.state == "dark") document.body.classList.add("dark_theme");
   document.querySelector(".header__button").addEventListener('click', e => {
     document.body.classList.toggle("dark_theme");
     localStorage.setItem("theme", JSON.stringify({state: document.body.classList.length > 0 ? "dark" : "light"}))
