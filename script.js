@@ -129,6 +129,7 @@ async function editWind(id) {
     })
 }
 
+
 function createWindow(type = "edit", elem) {
   if (document.querySelectorAll(".window").length !== 0) return;
   const back = document.createElement("div");
